@@ -80,3 +80,9 @@ AI Engine: Running
 
 </body>
 </html>
+
+Markdown
+
+
+![Build
+Status](https://github.com/USERNAME/REPO/actions/workflows/FILE.yml/badge.svg
