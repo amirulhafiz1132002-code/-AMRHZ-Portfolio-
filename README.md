@@ -1,3 +1,5 @@
+"This portfolio showcases my project in web development and AI. built using HTML,CSS,and Java Script, this project is ideal for clients or data analytics."
+
 /index.html
 # AMRHZ Portfolio<!DOCTYPE html>
 <html lang="en">
