@@ -1,28 +1,34 @@
-"This portfolio showcases my project in web development and AI. built using HTML,CSS,and Java Script, this project is ideal for clients or data analytics."
+# 🚀 AI Automation System (OpenAI + Web + Mobile)
 
-/index.html
-# AMRHZ Portfolio<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>AMRHZ Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0d1117;
-      color: #c9d1d9;
-    }
-    .container {
-      padding: 40px;
-      max-width: 900px;
-      margin: auto;
-    }
-    h1 {
-      font-size: 2.5rem;
-      color: #58a6ff;
-    }
+A full-stack AI system powered by OpenAI API, כולל:
+- 🌐 Website frontend
+- ⚙️ Backend API (Node.js)
+- 📱 Mobile integration (Kodular)
+- 🔁 Automation-ready architecture
+
+---
+
+# ✨ Features
+
+- 💬 AI Chat system (OpenAI integration)
+- 🌐 Simple web interface (HTML, JS)
+- ⚙️ REST API backend (Express.js)
+- 📱 Mobile app support (Kodular Web component)
+- 🔁 Scalable for automation (bots, content generation)
+
+---
+
+# 🧠 Tech Stack
+
+- Node.js
+- Express.js
+- OpenAI API
+- HTML / JavaScript
+- Kodular (No-code mobile app builder)
+
+---
+
+# 📁 Project Structure    }
     .tagline {
       font-size: 1.2rem;
       margin-bottom: 30px;
