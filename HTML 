@@ -1,0 +1,71 @@
+:root {
+  --primary: #0096FF;
+  --dark: #0050A0;
+  --bg: #0a0a0a;
+  --text: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(circle at center, #0a0a0a, #000000);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+}
+
+/* NAV */
+.nav {
+  padding: 20px;
+  text-align: center;
+}
+
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--primary);
+  letter-spacing: 2px;
+}
+
+/* HERO */
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-anim {
+  width: 180px;
+  filter: drop-shadow(0 0 20px rgba(0,150,255,0.6));
+}
+
+/* TEXT */
+.hero h2 {
+  font-family: 'Orbitron';
+  font-size: 28px;
+}
+
+.hero p {
+  opacity: 0.7;
+}
+
+/* BUTTON */
+.btn {
+  padding: 12px 28px;
+  border: none;
+  background: linear-gradient(90deg, #0096FF, #0050A0);
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0,150,255,0.6);
+}
