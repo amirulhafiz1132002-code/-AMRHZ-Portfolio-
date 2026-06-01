@@ -2,35 +2,193 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AMRHZ13 Dashboard</title>
+  <title>AMR Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Inter&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #0096FF;
+      --dark: #0050A0;
+      --bg: #0a0a0a;
+      --panel: #111;
+      --text: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      background: var(--panel);
+      padding: 20px;
+      border-right: 1px solid #222;
+    }
+
+    .logo {
+      font-family: 'Orbitron';
+      color: var(--primary);
+      margin-bottom: 30px;
+    }
+
+    .menu button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid #222;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .menu button:hover {
+      background: var(--primary);
+    }
+
+    /* MAIN */
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .header {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--panel);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #222;
+    }
+
+    /* COMMAND BOX */
+    .command-box {
+      display: flex;
+      gap: 10px;
+    }
+
+    .command-box input {
+      flex: 1;
+      padding: 10px;
+      background: #000;
+      border: 1px solid #333;
+      color: white;
+    }
+
+    .command-box button {
+      padding: 10px 20px;
+      background: var(--primary);
+      border: none;
+      cursor: pointer;
+      color: white;
+    }
+
+    .output {
+      margin-top: 10px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+  </style>
 </head>
-<body style="background:black; color:white; text-align:center;">
 
-  <h1>🚀 AMRHZ13 System Active</h1>
-  <p>You are inside the system.</p>
+<body>
 
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>AMRHZ13 Dashboard</title>
-</head>
-<body style="background:black; color:white; text-align:center;">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo">AMR SYS</div>
 
-  <h1>🚀 AMRHZ13 System Active</h1>
-  <p>You are inside the system.</p>
+    <div class="menu">
+      <button onclick="switchView('home')">Home</button>
+      <button onclick="switchView('ai')">AI Core</button>
+      <button onclick="switchView('system')">System</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <div class="header">Dashboard</div>
+
+    <!-- VIEW: HOME -->
+    <div id="homeView" class="view">
+      <div class="card">
+        <h3>Welcome</h3>
+        <p>System initialized. Ready for commands.</p>
+      </div>
+    </div>
+
+    <!-- VIEW: AI -->
+    <div id="aiView" class="view" style="display:none;">
+      <div class="card">
+        <h3>AI Command</h3>
+
+        <div class="command-box">
+          <input id="cmdInput" placeholder="type command...">
+          <button onclick="runCommand()">Run</button>
+        </div>
+
+        <div class="output" id="output"></div>
+      </div>
+    </div>
+
+    <!-- VIEW: SYSTEM -->
+    <div id="systemView" class="view" style="display:none;">
+      <div class="card">
+        <h3>System Status</h3>
+        <p>All systems operational.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JS SYSTEM -->
+  <script>
+
+    function switchView(view) {
+      document.getElementById("homeView").style.display = "none";
+      document.getElementById("aiView").style.display = "none";
+      document.getElementById("systemView").style.display = "none";
+
+      document.getElementById(view + "View").style.display = "block";
+    }
+
+    function runCommand() {
+      let input = document.getElementById("cmdInput").value.toLowerCase();
+      let output = document.getElementById("output");
+
+      if (input === "hello") {
+        output.innerText = "👋 Hello Amirul.";
+      }
+      else if (input === "open system") {
+        switchView("system");
+        output.innerText = "Opening System Panel...";
+      }
+      else if (input === "status") {
+        output.innerText = "System running at 100%.";
+      }
+      else {
+        output.innerText = "Unknown command.";
+      }
+    }
+
+  </script>
 
 </body>
 </html>
-<button onclick="executeCommand('go_home')">
-  ⬅ Back to Main
-</button>
-
-<script>
-function executeCommand(cmd) {
-  if (cmd === "go_home") {
-    window.location.href = "index.html";
-  }
-}
-</script>
