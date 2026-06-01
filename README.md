@@ -116,9 +116,11 @@
     <h2>AI Connection Space</h2>
     <p>Your digital mind layer</p>
 
-    <button class="btn" onclick="enterSystem()">Enter System</button>
-  </div>
-
+    <button class="btn" <button onclick="executeCommand('open_dashboard')">
+  Enter System
+</button><button onclick="goBack()">
+  ⬅ Back to Main
+</button>
   <script>
     function enterSystem() {
       alert("Booting AMR AI System...");
