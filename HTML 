@@ -69,3 +69,9 @@ body {
   transform: scale(1.05);
   box-shadow: 0 0 20px rgba(0,150,255,0.6);
 }
+<h2>AI Connection Space</h2>
+<p>Your digital mind layer</p>
+
+<button class="btn" onclick="executeCommand('open_dashboard')">
+  Open Dashboard
+</button>
