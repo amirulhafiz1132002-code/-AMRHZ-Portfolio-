@@ -1,0 +1,4 @@
+# DNS Hostname
+the following hostname: _gh-Amrhz1132002-o.www.amirulhafiz1132002.com
+2. Use this code for the value of the TXT record: c03ad82168. Please note that the code will expire in 7 days.
+3. Wait until your DNS configuration changes. This could take up to 72 hours to propagate.
