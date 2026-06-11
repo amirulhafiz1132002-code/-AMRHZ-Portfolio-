@@ -62,3 +62,6 @@ externalPort = 3000
 [deployment]
 deploymentTarget = "static"
 publicDir = "."
+
+[objectStorage]
+defaultBucketID = "replit-objstore-2f0aeab7-6402-477d-bcb3-1906ec6f78da"
