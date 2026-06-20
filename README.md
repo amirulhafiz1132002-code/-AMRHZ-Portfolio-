@@ -36,4 +36,3 @@ It is designed as a **dashboard system** where users interact using command-styl
 
 ---
 
-## 📁 Project Structure
