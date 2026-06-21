@@ -1,0 +1,66 @@
+id,user_message,ai_response,intent,context_tag,priority,timestamp
+id,user_message,ai_response,intent,context_tag,priority,timestamp
+1,hello,hi there,greeting,social,low,2026-05-042,build_model,I am learning this pattern...,general,auto,medium,2026-06-19
+2,apa yang kau bole buat,I am learning this pattern...,general,auto,medium,2026-06-19
+3,hrlp,I am learning this pattern...,general,auto,medium,2026-06-19
+4,help,I am learning this pattern...,general,auto,medium,2026-06-19
+5,py brain_project.py,I am learning this pattern...,general,auto,medium,2026-06-19
+6,help,I am learning this pattern...,general,auto,medium,2026-06-19
+7,py help,I am learning this pattern...,general,auto,medium,2026-06-19
+8,from keras.models import Sequential,I am learning this pattern...,general,auto,medium,2026-06-19
+9,from keras.layers import Dense,I am learning this pattern...,general,auto,medium,2026-06-19
+10,,I am learning this pattern...,general,auto,medium,2026-06-19
+11,def build_model(input_dim):,I am learning this pattern...,general,auto,medium,2026-06-19
+12,    model = Sequential(),I am learning this pattern...,general,auto,medium,2026-06-19
+13,"    model.add(Dense(64, input_dim=input_dim, activation='relu'))",I am learning this pattern...,general,auto,medium,2026-06-19
+14,"    model.add(Dense(32, activation='relu'))",I am learning this pattern...,general,auto,medium,2026-06-19
+15,"    model.add(Dense(1, activation='sigmoid'))  # For binary classification",I am learning this pattern...,general,auto,medium,2026-06-19
+16,,I am learning this pattern...,general,auto,medium,2026-06-19
+17,"    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])",I am learning this pattern...,general,auto,medium,2026-06-19
+18,    return model,I am learning this pattern...,general,auto,medium,2026-06-19
+19,hi,hi there,greeting,auto,medium,2026-06-19
+20,calling model,I am learning this pattern...,general,auto,medium,2026-06-19
+21,import sequencial,I am learning this pattern...,general,auto,medium,2026-06-19
+22,calling model Sequencial,I am learning this pattern...,general,auto,medium,2026-06-19
+23,hello,hi there,greeting,auto,medium,2026-06-19
+24,dir,I am learning this pattern...,general,auto,medium,2026-06-19
+25,dif,I am learning this pattern...,general,auto,medium,2026-06-19
+26,load brain_csv,I am learning this pattern...,general,auto,medium,2026-06-19
+27,open_dashbard,I am learning this pattern...,general,auto,medium,2026-06-19
+28,,I am learning this pattern...,general,auto,medium,2026-06-19
+29,,I am learning this pattern...,general,auto,medium,2026-06-19
+30,help,I am learning this pattern...,general,auto,medium,2026-06-19
+31,(list),I am learning this pattern...,general,auto,medium,2026-06-19
+32,listr,I am learning this pattern...,general,auto,medium,2026-06-19
+33,"open(BRAIN_FILE, mode='r', encoding='utf-8') as file:",I am learning this pattern...,general,auto,medium,2026-06-19
+34,        reader = csv.DictReader(file),I am learning this pattern...,general,auto,medium,2026-06-19
+35,        for row in reader:,I am learning this pattern...,general,auto,medium,2026-06-19
+36,            data.append(row),I am learning this pattern...,general,auto,medium,2026-06-19
+37,    return data,I am learning this pattern...,general,auto,medium,2026-06-19
+38,import csv,I am learning this pattern...,general,auto,medium,2026-06-19
+39,import random,I am learning this pattern...,general,auto,medium,2026-06-19
+40,from collections import defaultdict,I am learning this pattern...,general,auto,medium,2026-06-19
+41,from datetime import datetime,I am learning this pattern...,general,auto,medium,2026-06-19
+42,,I am learning this pattern...,general,auto,medium,2026-06-19
+43,,I am learning this pattern...,general,auto,medium,2026-06-19
+44,,I am learning this pattern...,general,auto,medium,2026-06-19
+45,build_model=Sequential(),I am learning this pattern...,general,auto,medium,2026-06-19
+46,hi,hi there,greeting,auto,medium,2026-06-19
+47,dir,I am learning this pattern...,general,auto,medium,2026-06-19
+48,from keras.models import Sequential,I am learning this pattern...,general,auto,medium,2026-06-19
+49,from keras.layers import Dense,I am learning this pattern...,general,auto,medium,2026-06-19
+50,,I am learning this pattern...,general,auto,medium,2026-06-19
+51,def build_model(input_dim):,I am learning this pattern...,general,auto,medium,2026-06-19
+52,    model = Sequential(),I am learning this pattern...,general,auto,medium,2026-06-19
+53,"    model.add(Dense(64, input_dim=input_dim, activation='relu'))",I am learning this pattern...,general,auto,medium,2026-06-19
+54,"    model.add(Dense(32, activation='relu'))",I am learning this pattern...,general,auto,medium,2026-06-19
+55,"    model.add(Dense(1, activation='sigmoid'))  # For binary classification",I am learning this pattern...,general,auto,medium,2026-06-19
+56,,I am learning this pattern...,general,auto,medium,2026-06-19
+57,"    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])",I am learning this pattern...,general,auto,medium,2026-06-19
+58,    return model,I am learning this pattern...,general,auto,medium,2026-06-19
+59,,I am learning this pattern...,general,auto,medium,2026-06-19
+60,,I am learning this pattern...,general,auto,medium,2026-06-19
+1,hello,Hi there!,greeting,manual,high,2026-01-01
+2,hi,Hello bro!,greeting,manual,high,2026-01-01
+3,error code fix,Cuba check syntax dulu,debug,manual,high,2026-01-01
+4,how to code python,Boleh mula dengan basic dulu,question,manual,medium,2026-01-01
