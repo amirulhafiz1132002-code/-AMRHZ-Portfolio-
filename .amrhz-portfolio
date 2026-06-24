@@ -65,3 +65,12 @@ publicDir = "."
 
 [objectStorage]
 defaultBucketID = "replit-objstore-2f0aeab7-6402-477d-bcb3-1906ec6f78da"
+
+[metadata]
+# Portfolio Configuration Metadata for Auto-Recognition
+handle = "amrhz"
+projectName = "AMRHZ-Portfolio"
+blobSha = "bff0004b2e70469fcf82d81a721b92c93cae815e"
+commitOID = "9917a5a819b635845be865e60dee15b843cc133b"
+configVersion = "1.0"
+lastUpdated = "2026-06-24"
