@@ -1,9 +1,9 @@
 import React from 'react';
 import { ArrowRight, Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import { Button } from './ui/button';
-import { mockGitHubData } from '../mock';
+import { Skeleton } from './ui/skeleton';
 
-export const Hero = () => {
+export const Hero = ({ userData, stats, loading }) => {
   const scrollToProjects = () => {
     const element = document.getElementById('projects');
     if (element) {
@@ -38,11 +38,15 @@ export const Hero = () => {
         <div className="mb-8 flex justify-center">
           <div className="relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity" />
-            <img
-              src={mockGitHubData.user.avatar}
-              alt={mockGitHubData.user.name}
-              className="relative w-32 h-32 rounded-full border-4 border-white dark:border-slate-900 shadow-xl"
-            />
+            {loading ? (
+              <Skeleton className="relative w-32 h-32 rounded-full" />
+            ) : (
+              <img
+                src={userData?.avatar || 'https://github.com/amirulhafiz1132002-code.png'}
+                alt={userData?.name || 'Profile'}
+                className="relative w-32 h-32 rounded-full border-4 border-white dark:border-slate-900 shadow-xl"
+              />
+            )}
           </div>
         </div>
 
@@ -50,13 +54,21 @@ export const Hero = () => {
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 text-slate-900 dark:text-white">
           Hi there! I'm{' '}
           <span className="bg-gradient-to-r from-cyan-500 via-teal-500 to-cyan-600 bg-clip-text text-transparent">
-            Muhammad Amirul Hafiz
+            {loading ? (
+              <Skeleton className="inline-block w-96 h-16" />
+            ) : (
+              userData?.name || 'Muhammad Amirul Hafiz'
+            )}
           </span>
         </h1>
 
         {/* Subtitle */}
         <p className="text-xl sm:text-2xl lg:text-3xl font-medium text-slate-600 dark:text-slate-300 mb-4">
-          Building AI-Powered Systems, Not Just Apps
+          {loading ? (
+            <Skeleton className="w-96 h-8 mx-auto" />
+          ) : (
+            userData?.bio || 'Building AI-Powered Systems, Not Just Apps'
+          )}
         </p>
 
         {/* Philosophy */}
@@ -67,19 +79,27 @@ export const Hero = () => {
         {/* Stats */}
         <div className="flex flex-wrap justify-center gap-8 mb-12">
           <div className="text-center">
-            <div className="text-3xl font-bold text-cyan-500">{mockGitHubData.stats.totalProjects}+</div>
+            <div className="text-3xl font-bold text-cyan-500">
+              {loading ? <Skeleton className="w-16 h-8" /> : `${stats?.totalProjects || 0}+`}
+            </div>
             <div className="text-sm text-slate-600 dark:text-slate-400">Projects</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-teal-500">{mockGitHubData.stats.activeProjects}</div>
+            <div className="text-3xl font-bold text-teal-500">
+              {loading ? <Skeleton className="w-16 h-8" /> : stats?.activeProjects || 0}
+            </div>
             <div className="text-sm text-slate-600 dark:text-slate-400">Active</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-cyan-500">{mockGitHubData.stats.languages.length}+</div>
+            <div className="text-3xl font-bold text-cyan-500">
+              {loading ? <Skeleton className="w-16 h-8" /> : `${stats?.languages?.length || 0}+`}
+            </div>
             <div className="text-sm text-slate-600 dark:text-slate-400">Languages</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-bold text-teal-500">{mockGitHubData.user.public_repos}</div>
+            <div className="text-3xl font-bold text-teal-500">
+              {loading ? <Skeleton className="w-16 h-8" /> : userData?.public_repos || 0}
+            </div>
             <div className="text-sm text-slate-600 dark:text-slate-400">Repositories</div>
           </div>
         </div>

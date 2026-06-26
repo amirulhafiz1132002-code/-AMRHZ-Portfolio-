@@ -1,22 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from '../components/Header';
 import { Hero } from '../components/Hero';
 import { ProjectCard } from '../components/ProjectCard';
 import { Footer } from '../components/Footer';
-import { mockGitHubData, roadmapPhases, techStack, achievements } from '../mock';
+import { githubAPI } from '../services/api';
+import { roadmapPhases, techStack, achievements } from '../mock';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Progress } from '../components/ui/progress';
 import { Button } from '../components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Target, Rocket, Lightbulb, Code2, Database, Cloud, Cpu, Award, CheckCircle2, Circle } from 'lucide-react';
+import { Skeleton } from '../components/ui/skeleton';
+import { Target, Rocket, Lightbulb, Code2, Database, Cloud, Cpu, Award, CheckCircle2, Circle, AlertCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 export const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [userData, setUserData] = useState(null);
+  const [repositories, setRepositories] = useState([]);
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const filteredProjects = selectedCategory === 'all'
-    ? mockGitHubData.repositories
-    : mockGitHubData.repositories.filter(repo => repo.category === selectedCategory);
+  // Fetch data on mount
+  useEffect(() => {
+    fetchAllData();
+  }, []);
+
+  // Fetch repositories when category changes
+  useEffect(() => {
+    if (!loading) {
+      fetchRepositories(selectedCategory);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCategory]);
+
+  const fetchAllData = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      // Fetch user data, repositories, and stats in parallel
+      const [userResponse, reposResponse, statsResponse] = await Promise.all([
+        githubAPI.getUser(),
+        githubAPI.getRepositories(),
+        githubAPI.getStats()
+      ]);
+
+      if (userResponse.success) {
+        setUserData(userResponse.data);
+      }
+      
+      if (reposResponse.success) {
+        setRepositories(reposResponse.data);
+      }
+      
+      if (statsResponse.success) {
+        setStats(statsResponse.data);
+      }
+      
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError('Failed to load GitHub data. Please try again later.');
+      setLoading(false);
+      toast.error('Failed to load GitHub data', {
+        description: 'Using cached data if available'
+      });
+    }
+  };
+
+  const fetchRepositories = async (category) => {
+    try {
+      const response = await githubAPI.getRepositories(category === 'all' ? null : category);
+      if (response.success) {
+        setRepositories(response.data);
+      }
+    } catch (err) {
+      console.error('Error fetching repositories:', err);
+      toast.error('Failed to filter projects');
+    }
+  };
 
   const categories = [
     { value: 'all', label: 'All Projects' },
@@ -27,10 +91,13 @@ export const Portfolio = () => {
     { value: 'resources', label: 'Resources' }
   ];
 
+  // Featured project (first core project)
+  const featuredProject = repositories.find(repo => repo.category === 'core') || repositories[0];
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <Header />
-      <Hero />
+      <Hero userData={userData} stats={stats} loading={loading} />
 
       {/* About Section */}
       <section id="about" className="py-24 bg-white dark:bg-slate-900">
@@ -109,112 +176,84 @@ export const Portfolio = () => {
       </section>
 
       {/* Main Project Highlight */}
-      <section className="py-24 bg-slate-50 dark:bg-slate-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge className="mb-4 bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-400 border-0">
-              Featured Project
-            </Badge>
-            <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">
-              AMRHZ Portfolio
-            </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400">
-              Transforming from a static portfolio → AI-Powered Agent System
-            </p>
-          </div>
+      {featuredProject && (
+        <section className="py-24 bg-slate-50 dark:bg-slate-950">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <Badge className="mb-4 bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-400 border-0">
+                Featured Project
+              </Badge>
+              <h2 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                {featuredProject.name}
+              </h2>
+              <p className="text-lg text-slate-600 dark:text-slate-400">
+                {featuredProject.description}
+              </p>
+            </div>
 
-          <Card className="border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
-            <CardContent className="p-8 md:p-12">
-              <div className="grid md:grid-cols-2 gap-12">
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-                    Project Vision
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-400 mb-6">
-                    Before: Building traditional HTML/CSS/JS portfolio websites
-                  </p>
-                  <p className="text-lg font-semibold text-cyan-500 mb-6">
-                    Now: Pivoting to an AI-Powered RAG System using Python + LangChain + Vector Databases
-                  </p>
+            <Card className="border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+              <CardContent className="p-8 md:p-12">
+                <div className="grid md:grid-cols-2 gap-12">
+                  <div>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+                      Project Vision
+                    </h3>
+                    <p className="text-slate-600 dark:text-slate-400 mb-6">
+                      Transforming from a static portfolio → AI-Powered Agent System
+                    </p>
 
-                  <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-4 mt-8">
-                    What's Being Built
-                  </h4>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-cyan-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-600 dark:text-slate-400">
-                        <strong className="text-slate-900 dark:text-white">AI Agent Dashboard</strong> - Interactive command-based system
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-teal-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-600 dark:text-slate-400">
-                        <strong className="text-slate-900 dark:text-white">Public Development</strong> - Updates 3x per week
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-cyan-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-600 dark:text-slate-400">
-                        <strong className="text-slate-900 dark:text-white">Cost-Optimized</strong> - Goal: Deploy AI agent with cost &lt;$0.01 per chat
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
-                    Current Features
-                  </h3>
-                  <ul className="space-y-3">
-                    {[
-                      'Interactive dashboard interface with command-style navigation',
-                      'Intelligent routing system between pages',
-                      'Custom UI design with modern UX principles',
-                      'Structured asset management and organization',
-                      'Foundation for AI integration and RAG capabilities'
-                    ].map((feature, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <div className="w-2 h-2 rounded-full bg-cyan-500 flex-shrink-0 mt-2" />
-                        <span className="text-slate-600 dark:text-slate-400">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-8 p-6 bg-gradient-to-br from-cyan-50 to-teal-50 dark:from-slate-800 dark:to-slate-800 rounded-xl">
-                    <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">
-                      Development Metrics
+                    <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-4 mt-8">
+                      Repository Stats
                     </h4>
-                    <div className="space-y-4">
-                      <div>
-                        <div className="flex justify-between text-sm mb-2">
-                          <span className="text-slate-600 dark:text-slate-400">Phase 1: Foundation</span>
-                          <span className="font-semibold text-cyan-500">80%</span>
-                        </div>
-                        <Progress value={80} className="h-2" />
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="text-center p-4 bg-cyan-50 dark:bg-slate-800 rounded-lg">
+                        <div className="text-2xl font-bold text-cyan-500">{featuredProject.stars}</div>
+                        <div className="text-xs text-slate-600 dark:text-slate-400">Stars</div>
                       </div>
-                      <div className="grid grid-cols-3 gap-4 text-center pt-4 border-t border-slate-200 dark:border-slate-700">
-                        <div>
-                          <div className="text-2xl font-bold text-cyan-500">12</div>
-                          <div className="text-xs text-slate-600 dark:text-slate-400">Stars</div>
-                        </div>
-                        <div>
-                          <div className="text-2xl font-bold text-teal-500">3</div>
-                          <div className="text-xs text-slate-600 dark:text-slate-400">Forks</div>
-                        </div>
-                        <div>
-                          <div className="text-2xl font-bold text-cyan-500">Active</div>
-                          <div className="text-xs text-slate-600 dark:text-slate-400">Status</div>
-                        </div>
+                      <div className="text-center p-4 bg-teal-50 dark:bg-slate-800 rounded-lg">
+                        <div className="text-2xl font-bold text-teal-500">{featuredProject.forks}</div>
+                        <div className="text-xs text-slate-600 dark:text-slate-400">Forks</div>
+                      </div>
+                      <div className="text-center p-4 bg-cyan-50 dark:bg-slate-800 rounded-lg">
+                        <div className="text-2xl font-bold text-cyan-500">{featuredProject.status}</div>
+                        <div className="text-xs text-slate-600 dark:text-slate-400">Status</div>
                       </div>
                     </div>
                   </div>
+
+                  <div>
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+                      Technologies
+                    </h3>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {featuredProject.tags && featuredProject.tags.map((tag, index) => (
+                        <Badge
+                          key={index}
+                          variant="outline"
+                          className="border-cyan-200 dark:border-cyan-900 text-cyan-700 dark:text-cyan-400"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    <div className="mt-8">
+                      <Button
+                        className="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white"
+                        asChild
+                      >
+                        <a href={featuredProject.url} target="_blank" rel="noopener noreferrer">
+                          View on GitHub
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+      )}
 
       {/* Projects Section */}
       <section id="projects" className="py-24 bg-white dark:bg-slate-900">
@@ -246,12 +285,46 @@ export const Portfolio = () => {
             ))}
           </div>
 
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
+          {/* Error State */}
+          {error && (
+            <div className="flex items-center justify-center gap-2 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900 rounded-lg mb-8">
+              <AlertCircle className="w-5 h-5 text-red-500" />
+              <p className="text-red-600 dark:text-red-400">{error}</p>
+            </div>
+          )}
+
+          {/* Loading State */}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <Card key={i} className="border-slate-200 dark:border-slate-800">
+                  <CardHeader>
+                    <Skeleton className="h-6 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-2/3" />
+                  </CardHeader>
+                  <CardContent>
+                    <Skeleton className="h-20 w-full" />
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            /* Projects Grid */
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {repositories.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </div>
+          )}
+
+          {repositories.length === 0 && !loading && (
+            <div className="text-center py-12">
+              <p className="text-slate-600 dark:text-slate-400">
+                No projects found in this category.
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -469,14 +542,16 @@ export const Portfolio = () => {
                   >
                     amirulhafiz1132002@gmail.com
                   </a>
-                  <a
-                    href="https://github.com/amirulhafiz1132002-code"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block text-cyan-500 hover:text-cyan-600 transition-colors"
-                  >
-                    @amirulhafiz1132002-code
-                  </a>
+                  {userData && (
+                    <a
+                      href={userData.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-cyan-500 hover:text-cyan-600 transition-colors"
+                    >
+                      @{userData.username}
+                    </a>
+                  )}
                 </div>
               </CardContent>
             </Card>

@@ -9,7 +9,10 @@ from pydantic import BaseModel, Field, ConfigDict
 from typing import List
 import uuid
 from datetime import datetime, timezone
+import sys
 
+# Add backend directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent))
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -20,7 +23,7 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # Create the main app without a prefix
-app = FastAPI()
+app = FastAPI(title="AMRHZ Portfolio API", version="1.0.0")
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
@@ -65,6 +68,10 @@ async def get_status_checks():
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
     
     return status_checks
+
+# Import and include GitHub routes
+from routes.github_routes import router as github_router
+api_router.include_router(github_router)
 
 # Include the router in the main app
 app.include_router(api_router)
