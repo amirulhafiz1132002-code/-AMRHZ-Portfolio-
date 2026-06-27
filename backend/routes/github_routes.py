@@ -67,7 +67,8 @@ async def github_health_check():
         await github_service.get_user()
         return {'success': True, 'message': 'GitHub API is accessible'}
     except Exception as e:
+        logger.error(f"Error in github_health_check: {str(e)}")
         return {
             'success': False,
-            'message': f'GitHub API is not accessible: {str(e)}'
+            'message': 'GitHub API is not accessible'
         }
