@@ -40,8 +40,7 @@ The presentation and control layers consist of several tightly integrated dashbo
 
 ---
 
-## 🌐 Edge Browser Tabs Metadata
-
+##Multi pages website 
 Tab dengan `isCurrent=true` ialah tab yang sedang aktif/dilihat oleh pengguna.  
 Tab dengan `isCurrent=false` ialah tab lain yang terbuka di latar belakang.
 
