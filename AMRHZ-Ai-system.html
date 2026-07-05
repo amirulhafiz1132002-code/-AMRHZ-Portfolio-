@@ -478,7 +478,13 @@
         const msg = input.value.trim();
         if(!msg) return;
         const container = document.getElementById('chat-messages');
-        container.innerHTML += `<div class="flex justify-end"><div class="bg-purple-600/30 border border-purple-500/30 rounded-xl rounded-tr-sm px-4 py-3 max-w-md text-sm">${msg}</div></div>`;
+        const userRow = document.createElement('div');
+        userRow.className = 'flex justify-end';
+        const userBubble = document.createElement('div');
+        userBubble.className = 'bg-purple-600/30 border border-purple-500/30 rounded-xl rounded-tr-sm px-4 py-3 max-w-md text-sm';
+        userBubble.textContent = msg;
+        userRow.appendChild(userBubble);
+        container.appendChild(userRow);
         input.value = '';
         container.innerHTML += `<div class="flex justify-start"><div class="glass rounded-xl rounded-tl-sm px-4 py-3 max-w-md text-sm opacity-50"><span class="text-cyan-300 text-xs font-medium block mb-1">AMRHZ AI</span>Thinking...</div></div>`;
         container.scrollTop = container.scrollHeight;
