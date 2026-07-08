@@ -71,3 +71,5 @@ edge_all_open_tabs = [
     "isCurrent": false
   }
 ]
+author by
+Muhammad Amirul Hafiz Bin Md Khalil Miah 
