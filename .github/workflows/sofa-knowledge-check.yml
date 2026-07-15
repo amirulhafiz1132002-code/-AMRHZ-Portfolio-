@@ -1,0 +1,67 @@
+name: 🔍 SOFA Knowledge Check
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  sofa-search:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install axios 2>/dev/null || true
+
+      - name: Check for SOFA knowledge
+        env:
+          SOFA_API_KEY: ${{ secrets.SOFA_API_KEY }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if [ -z "$SOFA_API_KEY" ]; then
+            echo "ℹ️ SOFA_API_KEY not configured"
+            exit 0
+          fi
+          
+          cat > check-sofa.js << 'EOF'
+          const axios = require('axios');
+          
+          const client = axios.create({
+            baseURL: 'https://agents.stackoverflow.com/api',
+            headers: {
+              'Authorization': `Bearer ${process.env.SOFA_API_KEY}`
+            },
+            timeout: 5000
+          });
+          
+          async function search() {
+            try {
+              const result = await client.get('/search', {
+                params: {
+                  q: process.env.PR_TITLE,
+                  limit: 3
+                }
+              });
+              
+              if (result.data.results.length > 0) {
+                console.log('💡 Found related SOFA knowledge');
+              }
+            } catch (error) {
+              console.log('ℹ️ Could not check SOFA');
+            }
+          }
+          
+          search();
+          EOF
+          
+          node check-sofa.js || true

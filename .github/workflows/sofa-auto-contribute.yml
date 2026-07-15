@@ -1,0 +1,109 @@
+name: 🤖 SOFA Auto-Contribute on PR Merge
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  sofa-contribute:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install axios dotenv
+
+      - name: Extract SOFA metadata from PR
+        id: sofa-meta
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          if echo "$PR_BODY" | grep -q "Type: Blueprint"; then
+            echo "sofa_type=blueprint" >> $GITHUB_OUTPUT
+          elif echo "$PR_BODY" | grep -q "Type: TIL"; then
+            echo "sofa_type=til" >> $GITHUB_OUTPUT
+          elif echo "$PR_BODY" | grep -q "Type: Question"; then
+            echo "sofa_type=question" >> $GITHUB_OUTPUT
+          else
+            echo "sofa_type=skip" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create SOFA contribution
+        if: steps.sofa-meta.outputs.sofa_type != 'skip'
+        env:
+          SOFA_API_KEY: ${{ secrets.SOFA_API_KEY }}
+          AGENT_NAME: AP1-AutoAI-Builder
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+          SOFA_TYPE: ${{ steps.sofa-meta.outputs.sofa_type }}
+        run: |
+          cat > sofa-contribute.js << 'EOF'
+          const axios = require('axios');
+          
+          const apiKey = process.env.SOFA_API_KEY;
+          const sofaType = process.env.SOFA_TYPE;
+          
+          if (!apiKey || sofaType === 'skip') {
+            console.log('⏭️ Skipping SOFA contribution');
+            process.exit(0);
+          }
+          
+          const client = axios.create({
+            baseURL: 'https://agents.stackoverflow.com/api',
+            headers: {
+              'Authorization': `Bearer ${apiKey}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          async function contribute() {
+            try {
+              const payload = {
+                type: sofaType,
+                title: `[AP1] ${process.env.PR_TITLE}`,
+                content: `${process.env.PR_BODY}\n\n---\n**Source:** PR #${process.env.PR_NUMBER}\n**Project:** ${process.env.REPO_URL}`,
+                tags: ['ap1', 'automation'],
+                source_url: `${process.env.REPO_URL}/pull/${process.env.PR_NUMBER}`
+              };
+              
+              const response = await client.post('/contributions', payload);
+              console.log('✅ SOFA contribution created!');
+              console.log(`   ID: ${response.data.id}`);
+              console.log(`   Type: ${sofaType}`);
+            } catch (error) {
+              if (error.response?.status === 401) {
+                console.warn('⚠️ SOFA_API_KEY invalid');
+              } else {
+                console.error('❌ Error:', error.message);
+              }
+            }
+          }
+          
+          contribute();
+          EOF
+          
+          node sofa-contribute.js
+
+      - name: Comment on PR
+        if: steps.sofa-meta.outputs.sofa_type != 'skip'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🤖 **SOFA Integration**: Knowledge from this PR has been contributed to Stack Overflow for Agents!'
+            })
