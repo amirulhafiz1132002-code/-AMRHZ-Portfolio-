@@ -1,15 +1,11 @@
-
-
-`markdown
-
-🖥️ AP1-WEB-Console
+#🖥️ AP1-WEB-Console
 
 AP1-WEB-Console is a modular, browser-based console project designed for learning, experimentation, and portfolio showcase.  
 It demonstrates responsive design, clean organization, and customizable console-like interactions powered by Python (FastAPI) and JavaScript frontend.
 
 ---
 
-🚀 Features
+#🚀 Features
 - Interactive web console with real-time command execution
 - Modular architecture (backend + frontend separation)
 - Memory persistence layer for contextual AI sessions
@@ -18,7 +14,7 @@ It demonstrates responsive design, clean organization, and customizable console-
 
 ---
 
-📂 Project Structure
+#📂 Project Structure
 `
 AP1-WEB-Console/
 ├── backend/              # FastAPI server & routes
@@ -32,7 +28,7 @@ AP1-WEB-Console/
 
 ---
 
-⚙️ Installation
+#⚙️ Installation
 Clone the repository and install dependencies:
 
 `bash
@@ -63,18 +59,18 @@ live-server frontend/
 
 ---
 
-🛡️ Security
+#🛡️ Security
 Refer to SECURITY.md for vulnerability reporting and best practices.  
 Never commit .env files or API keys directly into the repository.
 
 ---
 
-📜 Data Contracts
+#📜 Data Contracts
 See contracts.md for strict API interface definitions between backend and frontend layers.
 
 ---
 
-🛣️ Roadmap
+#🛣️ Roadmap
 - ✅ Modular project structure  
 - ✅ Security & contracts documentation  
 - 🚧 Enhanced documentation with architecture diagrams  
@@ -82,7 +78,7 @@ See contracts.md for strict API interface definitions between backend and fronte
 
 ---
 
-🤝 Contributing
+#🤝 Contributing
 1. Fork the repository  
 2. Create a feature branch (git checkout -b feature/new-feature)  
 3. Commit changes (git commit -m "feat: add new feature")  
@@ -91,7 +87,7 @@ See contracts.md for strict API interface definitions between backend and fronte
 
 ---
 
-👤 Author
+#👤 Author
 - Muhammad Amirul Hafiz Bin Md Khalil Miah (AMRHZ)  
 - GitHub: amirulhafiz1132002-code  
 - Instagram: @amrhz.13  
@@ -101,4 +97,3 @@ See contracts.md for strict API interface definitions between backend and fronte
 ---
 
 This README now covers overview, installation, usage, security, contracts, roadmap, and contribution guidelines — exactly what recruiters or collaborators expect in a professional repo.  
-
