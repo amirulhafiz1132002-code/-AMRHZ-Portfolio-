@@ -1,0 +1,13 @@
+/* Simple system-style loader */
+.loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(2,6,23,0.85),rgba(3,7,30,0.9));z-index:9999;backdrop-filter:blur(6px)}
+.loader-box{width:360px;max-width:90%;padding:20px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.04);color:#e6edf3;font-family:DM Sans,system-ui,Segoe UI,Roboto}
+.loader-title{font-weight:700;font-size:18px;margin-bottom:8px;color:#fff}
+.loader-sub{font-size:13px;opacity:0.75;margin-bottom:12px}
+.loader-dots{display:flex;gap:8px;height:18px}
+.loader-dot{width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,#8b5cf6,#06b6d4);opacity:0.95;transform:scale(0.7);animation:ld 1.2s infinite}
+.loader-dot:nth-child(2){animation-delay:0.15s}
+.loader-dot:nth-child(3){animation-delay:0.3s}
+.loader-progress{height:6px;background:rgba(255,255,255,0.06);border-radius:999px;margin-top:12px;overflow:hidden}
+.loader-progress > i{display:block;height:100%;width:40%;background:linear-gradient(90deg,#8b5cf6,#06b6d4);transform:translateX(-120%);animation:prog 1.5s ease-in-out forwards}
+@keyframes ld{0%{transform:scale(0.7);opacity:0.6}50%{transform:scale(1);opacity:1}100%{transform:scale(0.7);opacity:0.6}}
+@keyframes prog{0%{transform:translateX(-120%)}50%{transform:translateX(10%)}100%{transform:translateX(110%)}}

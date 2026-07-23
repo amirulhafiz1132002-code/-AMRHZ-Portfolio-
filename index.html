@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AMRHZ — Home</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/loader.css">
+  <style>body{font-family:'DM Sans',system-ui,Segoe UI,Roboto;background:linear-gradient(135deg,#07070a,#0d0b14);color:#e6edf3;min-height:100vh}</style>
+</head>
+<body>
+  <!-- Loader overlay -->
+  <div id="loader-overlay" class="loader-overlay">
+    <div class="loader-box">
+      <div class="loader-title">AMRHZ System Boot</div>
+      <div class="loader-sub">Initializing modules — welcome back, Amirul.</div>
+      <div class="loader-dots">
+        <div class="loader-dot"></div>
+        <div class="loader-dot"></div>
+        <div class="loader-dot"></div>
+      </div>
+      <div class="loader-progress"><i></i></div>
+    </div>
+  </div>
+
+  <header class="max-w-5xl mx-auto p-6 flex items-center justify-between">
+    <h1 class="text-2xl font-bold">AMRHZ</h1>
+    <nav class="space-x-4">
+      <a href="index.html" class="text-sm opacity-80">Home</a>
+      <a href="landing.html" class="text-sm opacity-80">Landing</a>
+      <a href="analytics.html" class="text-sm opacity-80">Analytics</a>
+      <a href="ap1-console.html" class="text-sm opacity-80">AP1 Console</a>
+      <a href="amrhz-ai-space.html" class="text-sm opacity-80">AI Space</a>
+      <a href="about.html" class="text-sm opacity-80">About</a>
+    </nav>
+  </header>
+
+  <main class="max-w-5xl mx-auto p-6">
+    <section class="glass p-6 rounded-xl" style="background:transparent">
+      <h2 class="text-3xl font-bold mb-2">Welcome to AMRHZ</h2>
+      <p class="opacity-80">Multi-page demo with a system-style loader. Use the navigation above to open each page.</p>
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <a href="landing.html" class="p-4 rounded-lg bg-white/5">Landing Page</a>
+        <a href="analytics.html" class="p-4 rounded-lg bg-white/5">Analytics</a>
+        <a href="ap1-console.html" class="p-4 rounded-lg bg-white/5">AP1 Console</a>
+        <a href="amrhz-ai-space.html" class="p-4 rounded-lg bg-white/5">AMRHZ AI Space</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/loader.js"></script>
+</body>
+</html>

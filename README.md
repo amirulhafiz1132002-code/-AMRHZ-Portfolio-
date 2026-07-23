@@ -343,3 +343,89 @@ Deployment Status: In Progress
 ---
 
 **Last Updated:** June 2026 | **Current Phase:** 1 - Foundation Building | **Next Update:** Weekly
+
+---
+
+## README (Bahasa Melayu)
+
+# AMRHZ-Portfolio
+
+Portfolio rasmi untuk Muhammad Amirul Hafiz Bin Md Khalil Miah (AMRHZ). Repo ini dibina untuk mempamerkan projek, kemahiran, dan hasil kerja dalam bidang teknologi serta pembangunan web.
+
+---
+
+## Struktur Projek
+
+- `Index.html` → Halaman utama portfolio (perhatian: fail wujud sebagai `Index.html`)
+- `style.css` → Gaya global di akar projek
+- `artifacts/` → Aset dan projek contoh (mockups, komponen, dan lain-lain)
+- `projects/` atau `project/` → Kod projek khusus (jika ada)
+- `README.md` → Dokumentasi ini
+
+> Nota: Nama fail adalah case-sensitive pada sistem fail Linux; gunakan `Index.html` jika itu yang wujud.
+
+---
+
+## Cara Guna
+
+1. Clone repositori
+
+```bash
+git clone https://github.com/amirulhafiz1132002-code/AMRHZ-Portfolio.git
+cd AMRHZ-Portfolio
+```
+
+2. Lihat laman portfolio secara lokal
+
+Jika anda hanya mahu melihat halaman statik, buka `Index.html` di penyemak imbas:
+
+```bash
+# Dari direktori repo
+xdg-open Index.html
+```
+
+3. Pembangunan/Perubahan
+
+- Edit fail HTML/CSS/JS di akar projek atau dalam `artifacts/` mengikut keperluan.
+- Jika projek mengandungi pakej Node/TypeScript (lihat `artifacts/mockup-sandbox`), ikut arahan di dalam folder tersebut:
+
+```bash
+cd artifacts/mockup-sandbox
+npm install
+npm run dev
+```
+
+4. Menyumbang
+
+- Fork repositori, buat branch baru, buat perubahan, dan hantar Pull Request.
+- Sertakan deskripsi ringkas perubahan dan cara untuk menguji.
+
+---
+
+## Sokongan
+
+Jika anda memerlukan bantuan atau ingin berkolaborasi, hubungi:
+
+- Email: amirulhafiz1132002@gmail.com
+
+---
+
+Jika anda mahu saya juga menukar nama `Index.html` ke `index.html` (atau sebaliknya) untuk konsistensi, beritahu saya dan saya boleh mengemas kini fail serta rujukan yang berkaitan.
+
+---
+
+## Local test harness
+
+A small bash script is included to serve the repository root and verify each page contains the loader overlay.
+
+Files:
+- `scripts/local_test.sh` — the test harness script
+
+Run locally:
+
+```bash
+chmod +x scripts/local_test.sh
+./scripts/local_test.sh
+```
+
+The script starts a temporary HTTP server on port `8000`, requests the pages `index.html`, `landing.html`, `analytics.html`, `ap1-console.html`, `amrhz-ai-space.html`, and `about.html`, and checks for the `loader-overlay` element. It prints a pass/fail summary and exits with non-zero on failure.
